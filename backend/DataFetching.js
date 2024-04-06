@@ -5,7 +5,7 @@ const options = {
   url: 'https://trailapi-trailapi.p.rapidapi.com/trails/explore/',
   params: {
     lat: '49.2609',
-    lon: '-123.114',
+    lon: '-123.1140',
     radius: '50'
   },
   headers: {
