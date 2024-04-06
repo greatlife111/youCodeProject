@@ -1,36 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 const Hikes = () => {
+  const[selectedFilter, setSelectedFilter] = useState(null);
   const [hikes, setHikes] = useState([]); // Initialize state to hold fetched hikes
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5500/api/trails');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setHikes(data.data); // Assuming the JSON structure has a 'data' key
-      } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch('128.189.157.26:5500/api/trails');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
-    
-    fetchData(); // Call fetchData within useEffect
-  }, []); // Empty dependency array means this runs once on mount
+      const data = await response.json();
+      const locations = json.trails.map((location) => ({name: location[1]}));
+      console.log(locations);
+      setHikes(data.data); // Assuming the JSON structure has a 'data' key
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
+  };
+  
+  useEffect(() => {
+    if (selectedFilter == 'Hiking') {
+      fetchData();
+    }
+  }, [selectedFilter]); // TODO I want the array 
 
-// const Hikes = () => {
-//   const [selectedFilter, setSelectedFilter] = useState(null);
+  // Sample data of hikes
+  const hikesData = [
+    { id: '1', name: 'Lynn Canyon', activity: 'Hiking', image: require('../assets/hike1.jpg') },
+    { id: '2', name: 'Joffre Lakes', activity: 'Hiking', image: require('../assets/hike2.jpg') },
+    { id: '3', name: 'Stanley Park', activity: 'Cycling', image: require('../assets/hike3.jpg') },
+    // Add more hike objects as needed
+  ];
 
-  // // Sample data of hikes
-  // const hikesData = [
-  //   { id: '1', name: 'Lynn Canyon', activity: 'Hiking', image: require('../assets/hike1.jpg') },
-  //   { id: '2', name: 'Joffre Lakes', activity: 'Hiking', image: require('../assets/hike2.jpg') },
-  //   { id: '3', name: 'Stanley Park', activity: 'Cycling', image: require('../assets/hike3.jpg') },
-  //   // Add more hike objects as needed
-  // ];
+  // List of all activities
+  const activities = [
+    "Hiking",
+    "Camping",
+    "Cycling",
+    "Running",
+    "Rock climbing",
+    "Kayaking",
+    "Fishing",
+    "Nature photography",
+    "Horseback riding",
+    "Swimming",
+    "Skiing",
+    "Snowboarding",
+    "Rafting",
+    "Surfing"
+  ];
 
   // Function to render each item in the list
   const renderItem = ({ item }) => (
@@ -51,24 +71,6 @@ const Hikes = () => {
       <Text style={styles.filterButtonText}>{activity}</Text>
     </TouchableOpacity>
   );
-
-  // List of all activities
-  const activities = [
-    "Hiking",
-    "Camping",
-    "Cycling",
-    "Running",
-    "Rock climbing",
-    "Kayaking",
-    "Fishing",
-    "Nature photography",
-    "Horseback riding",
-    "Swimming",
-    "Skiing",
-    "Snowboarding",
-    "Rafting",
-    "Surfing"
-  ];
 
   return (
     <View style={styles.container}>
