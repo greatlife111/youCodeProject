@@ -4,9 +4,9 @@ import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
 const Hikes = () => {
   // Sample data of hikes
   const hikesData = [
-    { id: '1', name: 'Hike 1', image: require('./images/hike1.jpg') },
-    { id: '2', name: 'Hike 2', image: require('./images/hike2.jpg') },
-    { id: '3', name: 'Hike 3', image: require('./images/hike3.jpg') },
+    { id: '1', name: 'Hike 1', image: require('../assets/hike1.jpg') },
+    { id: '2', name: 'Hike 2', image: require('../assets/hike2.jpg') },
+    { id: '3', name: 'Hike 3', image: require('../assets/hike3.jpg') },
     // Add more hike objects as needed
   ];
 
