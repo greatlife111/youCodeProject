@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Hikes from '../components/hikes';
 
 const HikesPage = () => {
   return (
     <View style={styles.container}>
-      <Text>Hikes Page</Text>
+      <Hikes /> 
     </View>
   );
 };
