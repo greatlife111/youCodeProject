@@ -2,15 +2,35 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 const Hikes = () => {
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [hikes, setHikes] = useState([]); // Initialize state to hold fetched hikes
 
-  // Sample data of hikes
-  const hikesData = [
-    { id: '1', name: 'Lynn Canyon', activity: 'Hiking', image: require('../assets/hike1.jpg') },
-    { id: '2', name: 'Joffre Lakes', activity: 'Hiking', image: require('../assets/hike2.jpg') },
-    { id: '3', name: 'Stanley Park', activity: 'Cycling', image: require('../assets/hike3.jpg') },
-    // Add more hike objects as needed
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5500/api/trails');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setHikes(data.data); // Assuming the JSON structure has a 'data' key
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      }
+    };
+    
+    fetchData(); // Call fetchData within useEffect
+  }, []); // Empty dependency array means this runs once on mount
+
+// const Hikes = () => {
+//   const [selectedFilter, setSelectedFilter] = useState(null);
+
+  // // Sample data of hikes
+  // const hikesData = [
+  //   { id: '1', name: 'Lynn Canyon', activity: 'Hiking', image: require('../assets/hike1.jpg') },
+  //   { id: '2', name: 'Joffre Lakes', activity: 'Hiking', image: require('../assets/hike2.jpg') },
+  //   { id: '3', name: 'Stanley Park', activity: 'Cycling', image: require('../assets/hike3.jpg') },
+  //   // Add more hike objects as needed
+  // ];
 
   // Function to render each item in the list
   const renderItem = ({ item }) => (
