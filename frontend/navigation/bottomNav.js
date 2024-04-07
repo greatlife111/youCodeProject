@@ -2,10 +2,11 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HikesPage from '../scenes/HikesPage';
 import Message from '../scenes/Message'
-import { FontAwesome } from '@expo/vector-icons';
+import Account from '../scenes/AccountPage'
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function TabNavigation() {
+export default function BottomNav() {
     
   const Tab = createBottomTabNavigator();
 
@@ -27,15 +28,26 @@ export default function TabNavigation() {
         name="Chat" 
         component={Message}
         options={{
-            tabBarLabel: 'Favourites',
+            tabBarLabel: 'Chat',
             tabBarLabelStyle: {
               fontSize: 16
             },
             tabBarIcon: ({ color }) => ( 
-              <FontAwesome name="heartbeat" size={24} color={color} />
+              <Ionicons name="chatbox-ellipses-outline" size={24} color={color} />
+            ),
+          }} />
+          <Tab.Screen 
+        name="Account" 
+        component={Account}
+        options={{
+            tabBarLabel: 'Account',
+            tabBarLabelStyle: {
+              fontSize: 16
+            },
+            tabBarIcon: ({ color }) => ( 
+              <MaterialCommunityIcons name="account-outline" size={24} color={color} />
             ),
           }} />
     </Tab.Navigator>
-    
   );
 }
