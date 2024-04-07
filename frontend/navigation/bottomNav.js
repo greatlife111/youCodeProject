@@ -49,6 +49,5 @@ export default function BottomNav() {
             ),
           }} />
     </Tab.Navigator>
-    
   );
 }

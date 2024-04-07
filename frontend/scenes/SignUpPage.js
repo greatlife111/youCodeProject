@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 const background = require("../assets/background.png");
 
@@ -8,15 +8,20 @@ export default function SignUpPage({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState(""); 
 
   const onHandleSignUp = () => {
-    if (email !== "" && password !== "") {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          console.log("success");
+    if (email !== "" && password !== "" && userName !== "") {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(userCredential.user, {
+            displayName: userName,
+          });
           navigation.navigate("LogIn"); 
         })
-        .catch((err) => Alert.alert("error", err.message)); //alert error
+        .catch((err) => Alert.alert("Error", err.message));
+    } else {
+      Alert.alert("Error", "Please fill in all fields");
     }
   };
   
@@ -26,10 +31,17 @@ export default function SignUpPage({ navigation }) {
       <View style={styles.whiteSheet} />
       <SafeAreaView style={styles.form}>
         <Text style={styles.title}>Sign Up</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter name"
+          textContentType="userName"
+          autoFocus={true}
+          value={userName}
+          onChangeText={(text) => setUserName(text)}
+        />
          <TextInput
         style={styles.input}
         placeholder="Enter email"
-        autoCapitalize="none"
         keyboardType="email-address"
         textContentType="emailAddress"
         autoFocus={true}
@@ -39,7 +51,6 @@ export default function SignUpPage({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Enter password"
-        autoCapitalize="none"
         autoCorrect={false}
         secureTextEntry={true}
         textContentType="password"
