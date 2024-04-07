@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
-
+import { useNavigation } from '@react-navigation/native';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCH4yvGj02iD4seWJx9L4XiPL-JJrtvHYo",
@@ -16,7 +16,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
+const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin }) => {
+  const navigation = useNavigation();
+
+  const handleNavigateToHikesPage = () => {
+    navigation.navigate('Hikes');
+  };
+  
   return (
     <View style={styles.authContainer}>
        <Text style={styles.title}>{'Sign In'}</Text>
@@ -37,7 +43,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
       />
       <View style={styles.buttonContainer}>
       <TouchableOpacity
-        onPress={handleAuthentication}
+        onPress={handleNavigateToHikesPage}
         style={[styles.button, { backgroundColor: '#023020', borderRadius: 8, }]}
       >
         <Text style={styles.buttonText}>Sign In</Text>
@@ -47,15 +53,6 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
   );
 }
 
-
-const AuthenticatedScreen = ({ user, handleAuthentication }) => {
-  return (
-    <View style={styles.authContainer}>
-      <Text style={styles.title}>Welcome</Text>
-      {/* <Button title="Logout" onPress={handleAuthentication}/> // Put a log out button here for now  */}
-    </View>
-  );
-};
 export default App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -91,11 +88,9 @@ export default App = () => {
     }
   };
 
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {user ? (
-        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
-      ) : (
         <AuthScreen
           email={email}
           setEmail={setEmail}
@@ -105,7 +100,6 @@ export default App = () => {
           setIsLogin={setIsLogin}
           handleAuthentication={handleAuthentication}
         />
-      )}
     </ScrollView>
   );
 }
