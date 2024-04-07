@@ -34,7 +34,8 @@ def register(in_name, in_password):
 
 name = input('Please enter your username:')
 password = input('Please enter your password:')
-user = register(name, password)
+email = input("Enter an email address: ")
+user = register(name, password, email)
 print(user)
 
 
