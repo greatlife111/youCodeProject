@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
+import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert, ScrollView } from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 const background = require("../assets/background.png");
@@ -9,6 +9,7 @@ export default function SignUpPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState(""); 
+  const [difficulty, setDifficulty] = useState(""); 
 
   const onHandleSignUp = () => {
     if (email !== "" && password !== "" && userName !== "") {
@@ -26,46 +27,56 @@ export default function SignUpPage({ navigation }) {
   };
   
   return (
-    <View style={styles.container}>
-      <Image source={background} style={styles.backImage} />
-      <View style={styles.whiteSheet} />
-      <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Sign Up</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Image source={background} style={styles.backImage} />
+        <View style={styles.whiteSheet} />
+        <SafeAreaView style={styles.form}>
+          <Text style={styles.title}>Sign Up</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter name"
+            textContentType="userName"
+            value={userName}
+            onChangeText={(text) => setUserName(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Perferred difficulty"
+            textContentType="difficulty"
+            value={difficulty}
+            onChangeText={(text) => setDifficulty(text)}
+          />
+           <TextInput
+          style={styles.input}
+          placeholder="Enter email"
+          keyboardType="email-address"
+          textContentType="emailAddress"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
         <TextInput
           style={styles.input}
-          placeholder="Enter name"
-          textContentType="userName"
-          autoFocus={true}
-          value={userName}
-          onChangeText={(text) => setUserName(text)}
+          placeholder="Enter password"
+          autoCorrect={false}
+          secureTextEntry={true}
+          textContentType="password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         />
-         <TextInput
-        style={styles.input}
-        placeholder="Enter email"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-        autoFocus={true}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter password"
-        autoCorrect={false}
-        secureTextEntry={true}
-        textContentType="password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={onHandleSignUp}>
-        <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}> Sign Up</Text>
-      </TouchableOpacity>
-      </SafeAreaView>
-      <StatusBar barStyle="light-content" />
-    </View>
+        <TouchableOpacity style={styles.button} onPress={onHandleSignUp}>
+          <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}> Sign Up</Text>
+        </TouchableOpacity>
+        </SafeAreaView>
+        <StatusBar barStyle="light-content" />
+      </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
   },
   whiteSheet: {
     width: '100%',
-    height: '75%',
+    height: '85%',
     position: "absolute",
     bottom: 0,
     backgroundColor: '#fff',
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   button: {
-    backgroundColor: '#f57c00',
+    backgroundColor: 'orange',
     height: 58,
     borderRadius: 10,
     justifyContent: 'center',

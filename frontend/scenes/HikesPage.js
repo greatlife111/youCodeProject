@@ -8,7 +8,7 @@ const Hikes = ({ navigation }) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://128.189.157.26:5500/api/trails', { timeout: 10000 });
+      // const response = await fetch('http://128.189.157.26:5500/api/trails', { timeout: 10000 });
       const data = await response.json();
       const names = data.data.map(item => item.name); // Fixed accessing data
       console.log(names);
@@ -20,7 +20,7 @@ const Hikes = ({ navigation }) => {
   
   useEffect(() => {
     if (selectedFilter == 'Hiking') {
-      fetchData();
+      // fetchData();
     }
   }, [selectedFilter]); // TODO I want the array 
 
@@ -63,7 +63,7 @@ const Hikes = ({ navigation }) => {
 
   const renderDetailsView = () => {
     if (!showDetails) return null;
-    navigation.navigate("Chat");
+    navigation.navigate("Account");
     setShowDetails(false);
     return
   };
@@ -71,7 +71,7 @@ const Hikes = ({ navigation }) => {
   // Function to render filter buttons
   const renderFilterButton = (activity) => (
     <TouchableOpacity
-      style={[styles.filterButton, { backgroundColor: selectedFilter === activity ? 'green' : '#ddd' }]}
+      style={[styles.filterButton, { backgroundColor: selectedFilter === activity ? 'orange' : '#fff' }]}
       onPress={() => setSelectedFilter(activity)}
     >
       <Text style={styles.filterButtonText}>{activity}</Text>
@@ -101,8 +101,7 @@ const Hikes = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#013220', // Dark green
-    marginTop: 50,
+    backgroundColor: '#013220' // Dark green
   },
   filterContainer: {
     flexDirection: 'row',
@@ -116,6 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
     backgroundColor: '#ddd',
+    height: 40
   },
   filterButtonText: {
     fontSize: 16,

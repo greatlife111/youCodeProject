@@ -9,10 +9,10 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      <Image style={{ height: "100%", width: "100%", position: "absolute", "left": 0, "top": 0 }} source={require('../assets/logo.png')} />
+      <Image style={{ height: "100%", width: "100%", position: "absolute", "left": 0, "top": 0 }} source={require('../assets/logo.jpg')} />
       <View style={styles.buttonArray}>
         <BigButton text="Sign In" color="green" onPress={() => navigation.navigate("SignIn")} />
-        <BigButton text="Sign Up" color="red" onPress={() => navigation.navigate("SignUp")} />
+        <BigButton text="Sign Up" color="#f57c00" onPress={() => navigation.navigate("SignUp")} />
       </View>
 
     </View>
